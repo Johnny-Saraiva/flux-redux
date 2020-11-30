@@ -1,109 +1,49 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { MdAddShoppingCart } from 'react-icons/md';
+
+import { formatPrice } from '../../util/format';
+import api from '../../services/api';
 
 import { ProductList } from './styles';
 
-function Home() {
+const Home = () => {
+  const [products, setProducts] = useState();
+
+  useEffect(() => {
+    const loadApi = async () => {
+      const response = await api.get('/products');
+
+      const data = await response.data.map((product) => ({
+        ...product,
+        formattedPrice: formatPrice(product.price),
+      }));
+
+      setProducts(data);
+    };
+
+    loadApi();
+  }, []);
+
   return (
     <ProductList>
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-mizuno-wave-prophecy-9/46/D16-5355-446/D16-5355-446_zoom1.jpg?ts=1599149600&ims=326x"
-          alt="Tênis"
-        />
-        <strong>Tênis Mizuno</strong>
-        <span>R$799,99</span>
+      {products &&
+        products.map((product) => (
+          <li key={product.id}>
+            <img src={product.image} alt={product.title} />
+            <strong>{product.title}</strong>
+            <span>{product.formattedPrice}</span>
 
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#FFF" /> 3
-          </div>
+            <button type="button">
+              <div>
+                <MdAddShoppingCart size={16} color="#FFF" /> 3
+              </div>
 
-          <span>Adicionar ao Carrinho</span>
-        </button>
-      </li>
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-mizuno-wave-prophecy-9/46/D16-5355-446/D16-5355-446_zoom1.jpg?ts=1599149600&ims=326x"
-          alt="Tênis"
-        />
-        <strong>Tênis Mizuno</strong>
-        <span>R$799,99</span>
-
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#FFF" /> 3
-          </div>
-
-          <span>Adicionar ao Carrinho</span>
-        </button>
-      </li>
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-mizuno-wave-prophecy-9/46/D16-5355-446/D16-5355-446_zoom1.jpg?ts=1599149600&ims=326x"
-          alt="Tênis"
-        />
-        <strong>Tênis Mizuno</strong>
-        <span>R$799,99</span>
-
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#FFF" /> 3
-          </div>
-
-          <span>Adicionar ao Carrinho</span>
-        </button>
-      </li>
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-mizuno-wave-prophecy-9/46/D16-5355-446/D16-5355-446_zoom1.jpg?ts=1599149600&ims=326x"
-          alt="Tênis"
-        />
-        <strong>Tênis Mizuno</strong>
-        <span>R$799,99</span>
-
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#FFF" /> 3
-          </div>
-
-          <span>Adicionar ao Carrinho</span>
-        </button>
-      </li>
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-mizuno-wave-prophecy-9/46/D16-5355-446/D16-5355-446_zoom1.jpg?ts=1599149600&ims=326x"
-          alt="Tênis"
-        />
-        <strong>Tênis Mizuno</strong>
-        <span>R$799,99</span>
-
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#FFF" /> 3
-          </div>
-
-          <span>Adicionar ao Carrinho</span>
-        </button>
-      </li>
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-mizuno-wave-prophecy-9/46/D16-5355-446/D16-5355-446_zoom1.jpg?ts=1599149600&ims=326x"
-          alt="Tênis"
-        />
-        <strong>Tênis Mizuno</strong>
-        <span>R$799,99</span>
-
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#FFF" /> 3
-          </div>
-
-          <span>Adicionar ao Carrinho</span>
-        </button>
-      </li>
+              <span>Adicionar ao Carrinho</span>
+            </button>
+          </li>
+        ))}
     </ProductList>
   );
-}
+};
 
 export default Home;
