@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { connect, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { MdAddShoppingCart } from 'react-icons/md';
 
 import { formatPrice } from '../../util/format';
@@ -55,4 +55,4 @@ const Home = () => {
   );
 };
 
-export default connect()(Home);
+export default Home;
