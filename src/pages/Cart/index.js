@@ -4,10 +4,15 @@ import {
   MdAddCircleOutline,
   MdDelete,
 } from 'react-icons/md';
+import { useSelector } from 'react-redux';
 
 import { Container, ProductTable, Total } from './styles';
 
 function Cart() {
+  const { cart } = useSelector((state) => ({
+    cart: state.cart,
+  }));
+
   return (
     <Container>
       <ProductTable>
@@ -21,37 +26,36 @@ function Cart() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              <img
-                src="https://static.netshoes.com.br/produtos/tenis-mizuno-wave-prophecy-9/46/D16-5355-446/D16-5355-446_zoom1.jpg?ts=1599149600&ims=326x"
-                alt="Tênis"
-              />
-            </td>
-            <td>
-              <strong>Tênis Mizuno</strong>
-              <span>R$799,99</span>
-            </td>
-            <td>
-              <div>
+          {cart.map((product) => (
+            <tr key={product.id}>
+              <td>
+                <img src={product.image} alt={product.title} />
+              </td>
+              <td>
+                <strong>{product.title}</strong>
+                <span>{product.formattedPrice}</span>
+              </td>
+              <td>
+                <div>
+                  <button type="button">
+                    <MdRemoveCircleOutline size={20} color="#7159c1" />
+                  </button>
+                  <input type="number" readOnly value={product.amount} />
+                  <button type="button">
+                    <MdAddCircleOutline size={20} color="#7159c1" />
+                  </button>
+                </div>
+              </td>
+              <td>
+                <strong>R$1599,98</strong>
+              </td>
+              <td>
                 <button type="button">
-                  <MdRemoveCircleOutline size={20} color="#7159c1" />
+                  <MdDelete size={20} color="#7159c1" />
                 </button>
-                <input type="number" readOnly value={2} />
-                <button type="button">
-                  <MdAddCircleOutline size={20} color="#7159c1" />
-                </button>
-              </div>
-            </td>
-            <td>
-              <strong>R$1599,98</strong>
-            </td>
-            <td>
-              <button type="button">
-                <MdDelete size={20} color="#7159c1" />
-              </button>
-            </td>
-          </tr>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </ProductTable>
 
