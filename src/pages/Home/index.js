@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { MdAddShoppingCart } from 'react-icons/md';
 
 import { formatPrice } from '../../util/format';
@@ -11,6 +11,14 @@ import { ProductList } from './styles';
 
 const Home = () => {
   const dispatch = useDispatch();
+
+  const { amount } = useSelector((state) => ({
+    amount: state.cart.reduce((quantity, product) => {
+      quantity[product.id] = product.amount;
+      return quantity;
+    }, {}),
+  }));
+
   const [products, setProducts] = useState();
 
   useEffect(() => {
@@ -43,7 +51,8 @@ const Home = () => {
 
             <button type="button" onClick={() => handleAddProduct(product)}>
               <div>
-                <MdAddShoppingCart size={16} color="#FFF" /> 3
+                <MdAddShoppingCart size={16} color="#FFF" />{' '}
+                {amount[product.id] || 0}
               </div>
 
               <span>Adicionar ao Carrinho</span>
