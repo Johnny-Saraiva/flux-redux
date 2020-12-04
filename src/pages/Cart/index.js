@@ -1,10 +1,12 @@
 import React from 'react';
+
 import {
   MdRemoveCircleOutline,
   MdAddCircleOutline,
   MdDelete,
 } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
+import * as CartActions from '../../store/modules/cart/actions';
 
 import { Container, ProductTable, Total } from './styles';
 
@@ -15,11 +17,8 @@ function Cart() {
 
   const dispatch = useDispatch();
 
-  const handleRemoveToCart = (product) => {
-    dispatch({
-      type: 'REMOVE_FROM_CART',
-      id: product,
-    });
+  const handleRemoveToCart = (id) => {
+    dispatch(CartActions.removeFromCart(id));
   };
 
   return (
