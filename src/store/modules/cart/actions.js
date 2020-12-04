@@ -11,3 +11,11 @@ export const removeFromCart = (id) => {
     id,
   };
 };
+
+export const updateAmount = (id, amount) => {
+  return {
+    type: '@cart/UPDATE_AMOUNT',
+    id,
+    amount,
+  };
+};

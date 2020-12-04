@@ -21,6 +21,14 @@ function Cart() {
     dispatch(CartActions.removeFromCart(id));
   };
 
+  const handleIncrement = (product) => {
+    dispatch(CartActions.updateAmount(product.id, product.amount + 1));
+  };
+
+  const handleDecrement = (product) => {
+    dispatch(CartActions.updateAmount(product.id, product.amount - 1));
+  };
+
   return (
     <Container>
       <ProductTable>
@@ -46,11 +54,19 @@ function Cart() {
               <td>
                 <div>
                   <button type="button">
-                    <MdRemoveCircleOutline size={20} color="#7159c1" />
+                    <MdRemoveCircleOutline
+                      size={20}
+                      color="#7159c1"
+                      onClick={() => handleDecrement(product)}
+                    />
                   </button>
                   <input type="number" readOnly value={product.amount} />
                   <button type="button">
-                    <MdAddCircleOutline size={20} color="#7159c1" />
+                    <MdAddCircleOutline
+                      size={20}
+                      color="#7159c1"
+                      onClick={() => handleIncrement(product)}
+                    />
                   </button>
                 </div>
               </td>
