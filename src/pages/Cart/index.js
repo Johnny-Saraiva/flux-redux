@@ -7,12 +7,21 @@ import {
 } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import * as CartActions from '../../store/modules/cart/actions';
+import { formatPrice } from '../../util/format';
 
 import { Container, ProductTable, Total } from './styles';
 
 function Cart() {
-  const { cart } = useSelector((state) => ({
-    cart: state.cart,
+  const { cart, totalPrice } = useSelector((state) => ({
+    cart: state.cart.map((product) => ({
+      ...product,
+      subtotal: formatPrice(product.price * product.amount),
+    })),
+    totalPrice: formatPrice(
+      state.cart.reduce((total, product) => {
+        return total + product.price * product.amount;
+      }, 0)
+    ),
   }));
 
   const dispatch = useDispatch();
@@ -71,7 +80,7 @@ function Cart() {
                 </div>
               </td>
               <td>
-                <strong>R$1599,98</strong>
+                <strong>{product.subtotal}</strong>
               </td>
               <td>
                 <button
@@ -91,7 +100,7 @@ function Cart() {
 
         <Total>
           <span>Total</span>
-          <strong>R$1920,28</strong>
+          <strong>{totalPrice}</strong>
         </Total>
       </footer>
     </Container>
