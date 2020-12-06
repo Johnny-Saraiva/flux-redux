@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {
   MdRemoveCircleOutline,
   MdAddCircleOutline,
@@ -12,17 +11,20 @@ import { formatPrice } from '../../util/format';
 import { Container, ProductTable, Total } from './styles';
 
 function Cart() {
-  const { cart, totalPrice } = useSelector((state) => ({
-    cart: state.cart.map((product) => ({
+  const cart = useSelector((state) =>
+    state.cart.map((product) => ({
       ...product,
       subtotal: formatPrice(product.price * product.amount),
-    })),
-    totalPrice: formatPrice(
+    }))
+  );
+
+  const totalPrice = useSelector((state) =>
+    formatPrice(
       state.cart.reduce((total, product) => {
         return total + product.price * product.amount;
       }, 0)
-    ),
-  }));
+    )
+  );
 
   const dispatch = useDispatch();
 

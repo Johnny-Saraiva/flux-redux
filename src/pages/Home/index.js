@@ -12,12 +12,12 @@ import { ProductList } from './styles';
 const Home = () => {
   const dispatch = useDispatch();
 
-  const { amount } = useSelector((state) => ({
-    amount: state.cart.reduce((quantity, product) => {
+  const amount = useSelector((state) =>
+    state.cart.reduce((quantity, product) => {
       quantity[product.id] = product.amount;
       return quantity;
-    }, {}),
-  }));
+    }, {})
+  );
 
   const [products, setProducts] = useState();
 
