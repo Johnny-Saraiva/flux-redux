@@ -19,9 +19,17 @@ export const removeFromCart = (id) => {
   };
 };
 
-export const updateAmount = (id, amount) => {
+export const updateAmountRequest = (id, amount) => {
   return {
-    type: '@cart/UPDATE_AMOUNT',
+    type: '@cart/UPDATE_AMOUNT_REQUEST',
+    id,
+    amount,
+  };
+};
+
+export const updateAmountSuccess = (id, amount) => {
+  return {
+    type: '@cart/UPDATE_AMOUNT_SUCCESS',
     id,
     amount,
   };
