@@ -10,8 +10,7 @@ import * as CartActions from '../../store/modules/cart/actions';
 import { ProductList } from './styles';
 
 const Home = () => {
-  const dispatch = useDispatch();
-
+  const [products, setProducts] = useState([]);
   const amount = useSelector((state) =>
     state.cart.reduce((quantity, product) => {
       quantity[product.id] = product.amount;
@@ -19,7 +18,7 @@ const Home = () => {
     }, {})
   );
 
-  const [products, setProducts] = useState();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const loadApi = async () => {
